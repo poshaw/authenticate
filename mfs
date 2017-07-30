@@ -1,0 +1,24 @@
+# run using:
+# $ make --file=mfs
+
+SRC=server.c
+OBJ=$(SRC:.c=.o)
+EXE=server
+
+CC=gcc
+CFLAGS=-Wall
+LDFLAGS=-L/usr/lib -lssl -lcrypto -ldl
+RM=rm -f
+
+%.o: %.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+.PHONY : all
+all: $(EXE)
+
+$(EXE): $(OBJ)
+	$(CC) $(OBJ) $(LDFLAGS) -o $@
+
+.PHONY : clean
+clean:
+	-$(RM) $(OBJ) core
